@@ -12,7 +12,10 @@
 export const SITE_URL = "https://www.skyride.app";
 
 export const site = {
-  name: "SkyRide",
+  // Two words, matching the App Store / TestFlight listing ("Sky Ride —
+  // Airport Ride Share"). The domain and the localStorage theme key stay
+  // one-word; only the human-readable name is spaced.
+  name: "Sky Ride",
   url: SITE_URL,
   region: "Puget Sound",
   tagline: "Airport rides you book before you pack.",

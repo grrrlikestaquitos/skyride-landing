@@ -1,39 +1,28 @@
+import Image from "next/image";
 import { site } from "@/lib/site";
 
 /**
- * Brand mark: an ascending route line lifting off a ground node — the
- * curb-to-gate trip in one glyph.
+ * The real app icon, not a stand-in.
+ *
+ * `/icon-192.png` is the same asset the document already declares in its
+ * `icons` metadata, so the browser has it either way — reusing it here costs no
+ * extra request, and the site mark can never drift from the icon on the
+ * home screen. Regenerate both together with the script noted in app/layout.tsx.
+ *
+ * The source PNG is a full square (iOS applies its own mask), so the squircle
+ * is applied here: 22% of the width is close to Apple's continuous corner.
  */
 export function LogoMark({ className = "" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
+    <Image
+      src="/icon-192.png"
+      alt=""
       aria-hidden="true"
-      className={className}
-      fill="none"
-    >
-      <defs>
-        <linearGradient id="skyride-mark" x1="0" y1="0" x2="32" y2="32">
-          <stop offset="0%" stopColor="var(--brand)" />
-          <stop offset="100%" stopColor="var(--expressive)" />
-        </linearGradient>
-      </defs>
-      <rect width="32" height="32" rx="9" fill="url(#skyride-mark)" />
-      <path
-        d="M7.5 21.5c4.4 0 8.2-1.6 11-4.4 2.8-2.8 4.3-6.2 4.4-10.1"
-        stroke="var(--brand-contrast)"
-        strokeWidth="2.25"
-        strokeLinecap="round"
-      />
-      <circle cx="7.5" cy="21.5" r="2.6" fill="var(--brand-contrast)" />
-      <path
-        d="M18.6 7h4.5v4.5"
-        stroke="var(--brand-contrast)"
-        strokeWidth="2.25"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+      width={192}
+      height={192}
+      priority
+      className={`rounded-[22%] ${className}`}
+    />
   );
 }
 

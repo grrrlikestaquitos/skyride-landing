@@ -1,4 +1,4 @@
-import { fareExample, quoteFare, usd } from "@/lib/site";
+import { fareExample, quoteFare, site, usd } from "@/lib/site";
 
 const fare = quoteFare(fareExample);
 
@@ -11,7 +11,7 @@ export function PhoneMock() {
   return (
     <div
       role="img"
-      aria-label="The SkyRide app showing a scheduled trip to SEA with the driver en route and the fare quoted upfront."
+      aria-label={`The ${site.name} app showing a scheduled trip to SEA with the driver en route and the fare quoted upfront.`}
       className="relative mx-auto w-[300px] select-none sm:w-[330px]"
     >
       {/* Device shell */}

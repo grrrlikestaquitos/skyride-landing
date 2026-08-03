@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { site } from "@/lib/site";
 
@@ -21,6 +23,15 @@ export const OG_IMAGE = {
 
 // Required by `output: "export"`: the PNG is rendered once at build time.
 export const dynamic = "force-static";
+
+/*
+  Satori cannot fetch over the network, so the app icon is inlined as a data
+  URI. Read at build time from the same `public/` asset the site header uses —
+  the card and the site therefore always show the same mark.
+*/
+const APP_ICON = `data:image/png;base64,${readFileSync(
+  join(process.cwd(), "public", "icon-192.png"),
+).toString("base64")}`;
 
 /*
   Satori resolves neither CSS variables nor Tailwind classes, so the brand
@@ -62,34 +73,13 @@ export function GET() {
 
       {/* Wordmark */}
       <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-        <div
-          style={{
-            width: 56,
-            height: 56,
-            borderRadius: 16,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: `linear-gradient(135deg, ${BRAND} 0%, #b6a3d4 100%)`,
-          }}
-        >
-          <svg width="34" height="34" viewBox="0 0 32 32" fill="none">
-            <path
-              d="M7.5 21.5c4.4 0 8.2-1.6 11-4.4 2.8-2.8 4.3-6.2 4.4-10.1"
-              stroke={BG}
-              strokeWidth="2.6"
-              strokeLinecap="round"
-            />
-            <circle cx="7.5" cy="21.5" r="2.8" fill={BG} />
-            <path
-              d="M18.6 7h4.5v4.5"
-              stroke={BG}
-              strokeWidth="2.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
+        <img
+          src={APP_ICON}
+          alt=""
+          width={56}
+          height={56}
+          style={{ borderRadius: 13 }}
+        />
         <div
           style={{
             display: "flex",

@@ -1,6 +1,6 @@
-# SkyRide — landing page
+# Sky Ride — landing page
 
-Marketing site for SkyRide, a scheduled-in-advance airport ride service for the
+Marketing site for Sky Ride, a scheduled-in-advance airport ride service for the
 Puget Sound (SeaTac and Paine Field).
 
 Built with Next.js 16 (App Router) and Tailwind CSS v4, published as a fully
