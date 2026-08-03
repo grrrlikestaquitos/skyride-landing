@@ -1,13 +1,7 @@
 import { JoinBeta, SiteFooter } from "@/components/cta";
 import { Hero } from "@/components/hero";
 import { Pricing } from "@/components/pricing";
-import {
-  Coverage,
-  Drivers,
-  HowItWorks,
-  Riders,
-  Stack,
-} from "@/components/sections";
+import { Coverage, Drivers, HowItWorks, Riders } from "@/components/sections";
 import { SiteHeader } from "@/components/site-header";
 
 export default function LandingPage() {
@@ -21,7 +15,6 @@ export default function LandingPage() {
         <Drivers />
         <Pricing />
         <Coverage />
-        <Stack />
         <JoinBeta />
       </main>
       <SiteFooter />

@@ -33,6 +33,22 @@ export const metadata: Metadata = {
     "Seattle airport ride",
   ],
   alternates: { canonical: "/" },
+  /*
+    Declared explicitly rather than through the `icon`/`apple-icon` file
+    convention, for the same reason as the OG image: that convention serves the
+    PNG from an extensionless path (`/icon?<hash>`), and GitHub Pages derives
+    Content-Type from the extension alone. These live in `public/` so they keep
+    a real `.png`. `favicon.ico` stays a file convention — its path already
+    carries the extension. Regenerate with:
+      swift ../2MyGate/Tools/render-app-icon.swift web public
+  */
+  icons: {
+    icon: [
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+  },
   openGraph: {
     type: "website",
     url: SITE_URL,

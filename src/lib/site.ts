@@ -17,9 +17,9 @@ export const site = {
   region: "Puget Sound",
   tagline: "Airport rides you book before you pack.",
   description:
-    "SkyRide is scheduled-in-advance airport ground transport for the Puget Sound. Lock in your pickup time and your fare days ahead, then watch your driver come to the curb. Now in public beta on TestFlight.",
+    "Scheduled airport rides across the Puget Sound. Lock in your pickup time and your fare days ahead, then watch your driver come to the curb.",
   shortDescription:
-    "Scheduled airport rides for SeaTac and Paine Field. Fixed pickup time, fare quoted upfront. Now in public beta on TestFlight.",
+    "Scheduled airport rides for SeaTac and Paine Field. Fare quoted upfront, no surge.",
 } as const;
 
 export const navLinks = [
@@ -52,17 +52,17 @@ export const beta = {
     {
       step: "01",
       title: "Install TestFlight",
-      body: "Apple ships betas through its own free app. Grab it from the App Store on the iPhone you'll be booking rides from.",
+      body: "Apple's free beta app, from the App Store.",
     },
     {
       step: "02",
       title: "Open the invite",
-      body: "Tap the join link on this page from that iPhone. TestFlight opens on the SkyRide group with an Accept button.",
+      body: "Tap the join link from your iPhone and accept.",
     },
     {
       step: "03",
-      title: "Book or start driving",
-      body: "Sign in with Apple and schedule an airport run. Driving instead? Clear verification in the app and the open pool unlocks.",
+      title: "Book your first ride",
+      body: "Sign in and schedule an airport run.",
     },
   ],
 } as const;
@@ -143,68 +143,68 @@ export const heroStats = [
 export const riderSteps = [
   {
     step: "01",
-    title: "Set the flight, not the moment",
-    body: "Pick your airport, your address and the pickup window. Schedule it the day you book the flight — SkyRide only does planned trips, so there is nothing to refresh at 4am.",
+    title: "Schedule it",
+    body: "Pick your airport, your address and a pickup window — days ahead, not minutes before.",
   },
   {
     step: "02",
-    title: "See the fare before you commit",
-    body: "The route is priced on the server the instant you schedule. Distance, time and a capped traffic factor — the number you agree to is the number you pay.",
+    title: "See the fare",
+    body: "The full price appears before you confirm, and it doesn't move afterwards.",
   },
   {
     step: "03",
-    title: "A driver claims it, then arrives",
-    body: "Your trip enters the open pool and a verified driver claims it. You get the driver, the vehicle and live tracking as the pickup window opens.",
+    title: "Meet your driver",
+    body: "A verified driver claims the trip. Track them to the curb when the window opens.",
   },
 ] as const;
 
 export const driverSteps = [
   {
     step: "01",
-    title: "Get verified once",
-    body: "Licence, vehicle and safety checks live in the app. Clear them once and the airport pool opens up.",
+    title: "Get verified",
+    body: "Licence, vehicle and safety checks, all in the app. Clear them once.",
   },
   {
     step: "02",
-    title: "Browse the open pool",
-    body: "Every unclaimed airport trip, with distance, duration and payout shown before you commit. No blind pings, no accept-in-8-seconds roulette.",
+    title: "Browse the pool",
+    body: "Every open airport trip, with distance, duration and payout shown upfront.",
   },
   {
     step: "03",
-    title: "Claim what fits your day",
-    body: "Claims are atomic — one tap, one driver, no double-booking. Build tomorrow around the trips you actually want.",
+    title: "Claim what fits",
+    body: "One tap and the run is yours. Build your week around the trips you want.",
   },
 ] as const;
 
 export const riderFeatures = [
   {
     title: "Scheduled, not summoned",
-    body: "Every trip is booked ahead against a pickup window, so your ride is arranged long before the airport run starts.",
+    body: "Book your pickup window days ahead. Nothing to refresh at 4am.",
     icon: "calendar",
   },
   {
     title: "Fare quoted upfront",
-    body: "Pricing is computed server-side from the route. No post-trip recalculation, no surge multiplier appearing at checkout.",
+    body: "You see the price before you confirm. No surge, no recalculation.",
     icon: "tag",
   },
   {
     title: "Live driver tracking",
-    body: "Once a driver claims your trip you can follow the approach on the map, with status moving from assigned to in progress to completed.",
+    body: "Follow your driver to the curb once the trip is claimed.",
     icon: "map",
   },
   {
     title: "Seats and child seats",
-    body: "Declare passengers and child seats when you book, so the driver who claims the trip arrives with the right vehicle.",
+    body: "Say who's riding when you book, and the right vehicle shows up.",
     icon: "passengers",
   },
   {
-    title: "Edit while it is still yours",
-    body: "Change timing or details up to the point the booking locks. The app is explicit about what can still move and what cannot.",
+    title: "Plans can move",
+    body: "Edit timing and details right up until the booking locks.",
     icon: "edit",
   },
   {
     title: "Rate every trip",
-    body: "Trip history and driver ratings stay in the app, so repeat airport runs get better instead of starting from zero.",
+    body: "Your history and your drivers carry over, run after run.",
     icon: "star",
   },
 ] as const;
@@ -212,22 +212,22 @@ export const riderFeatures = [
 export const driverFeatures = [
   {
     title: "Open ride pool",
-    body: "No dispatcher deciding for you. Scheduled airport trips sit in a shared pool and you take the ones that fit.",
+    body: "Scheduled airport trips in one shared list. No dispatcher deciding for you.",
     icon: "pool",
   },
   {
-    title: "Atomic claims",
-    body: "The claim either succeeds or it does not. Two drivers can never end up assigned to the same trip.",
+    title: "No double bookings",
+    body: "One tap, one driver. A trip you claim stays yours.",
     icon: "lock",
   },
   {
     title: "Payout before you accept",
-    body: "Distance, duration and fare are on the card. You decide with the full picture rather than after arrival.",
+    body: "Distance, duration and fare on the card, before you commit.",
     icon: "wallet",
   },
   {
     title: "Plan a week ahead",
-    body: "Because every trip is scheduled, you can fill Thursday on Monday instead of waiting for demand to appear.",
+    body: "Every trip is scheduled, so you can fill Thursday on Monday.",
     icon: "clock",
   },
 ] as const;
@@ -237,13 +237,4 @@ export const tripLifecycle = [
   { state: "Assigned", note: "Driver claimed it" },
   { state: "In progress", note: "On the way" },
   { state: "Completed", note: "Rated and filed" },
-] as const;
-
-export const stack = [
-  { name: "SwiftUI", role: "Native iOS client" },
-  { name: "Node · TypeScript", role: "Express API" },
-  { name: "PostgreSQL", role: "Trips and identity" },
-  { name: "Knex", role: "Migrations and queries" },
-  { name: "MapKit", role: "Routing and tracking" },
-  { name: "Sign in with Apple", role: "Verified auth" },
 ] as const;

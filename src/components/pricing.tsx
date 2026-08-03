@@ -10,22 +10,22 @@ const rules = [
   {
     label: "Distance rate",
     value: `${usd(pricing.ratePerMile)} / mi`,
-    note: "Charged on the routed distance, not the crow-flies distance.",
+    note: "Charged on the driven route, not a straight line.",
   },
   {
     label: "Time rate",
     value: `${usd(pricing.ratePerMinute)} / min`,
-    note: "Estimated duration for the route at your pickup time.",
+    note: "Estimated duration for your route at your pickup time.",
   },
   {
     label: "Traffic factor",
     value: `${pricing.minTrafficMultiplier.toFixed(1)}–${pricing.maxTrafficMultiplier.toFixed(1)}×`,
-    note: "Applies to the time component only, and is hard-capped. There is no unbounded surge.",
+    note: "Applies to time only, and it's capped. There is no unbounded surge.",
   },
   {
     label: "Minimum fare",
     value: usd(pricing.minimumFare),
-    note: "The floor for very short runs.",
+    note: "The floor for short runs.",
   },
 ];
 
@@ -44,8 +44,7 @@ export function Pricing() {
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-ink-muted">
             Four numbers decide your fare, and none of them change after you
-            book. The quote is computed on our servers when the trip is created
-            — the app cannot talk you into a different price later.
+            book.
           </p>
 
           <dl className="mt-10 divide-y divide-line border-t border-line">
@@ -110,8 +109,8 @@ export function Pricing() {
             </div>
 
             <p className="border-t border-line bg-bg-soft px-7 py-4 text-[0.8125rem] text-ink-muted">
-              Illustrative route. Your quote is calculated from the real routed
-              distance and duration when you schedule.
+              Illustrative route. Your quote comes from your actual route when
+              you schedule.
             </p>
           </figure>
         </div>

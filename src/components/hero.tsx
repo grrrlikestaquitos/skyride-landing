@@ -1,6 +1,6 @@
 import { BetaLink } from "@/components/beta-link";
 import { PhoneMock } from "@/components/phone";
-import { beta, heroStats } from "@/lib/site";
+import { heroStats } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -34,10 +34,8 @@ export function Hero() {
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-              SkyRide only does scheduled airport trips. Set the pickup when you
-              book the flight, see the fare before you agree to it, and let a
-              verified driver claim the run days in advance. The iOS beta is
-              open now.
+              Set your pickup when you book the flight, see the fare before you
+              agree to it, and let a verified driver take it from there.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -61,8 +59,10 @@ export function Hero() {
               </a>
             </div>
 
+            {/* The full TestFlight requirements live in the join section; the
+                hero only needs the two facts that gate a decision here. */}
             <p className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.6875rem] tracking-[0.06em] text-ink-faint uppercase">
-              <span>{beta.requirements}</span>
+              <span>iPhone only</span>
               <span aria-hidden="true">·</span>
               <span>No surge pricing</span>
             </p>

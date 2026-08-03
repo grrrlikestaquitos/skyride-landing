@@ -20,9 +20,8 @@ export function JoinBeta() {
             <br className="hidden sm:block" /> is open.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-            SkyRide ships to testers through TestFlight, Apple&apos;s beta
-            program. Join the group and the app installs straight to your
-            iPhone — riders and drivers run the same build.
+            SkyRide installs through TestFlight, Apple&apos;s beta app. Riders
+            and drivers use the same download.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <BetaLink className="btn btn-primary">

@@ -6,7 +6,6 @@ import {
   driverSteps,
   riderFeatures,
   riderSteps,
-  stack,
   tripLifecycle,
 } from "@/lib/site";
 
@@ -102,7 +101,7 @@ export function HowItWorks() {
       <SectionHeading
         eyebrow="How it works"
         title="Planned trips, not a scramble for a car."
-        body="A SkyRide trip is arranged ahead of time and priced the moment it is created. Riders schedule it; drivers claim it out of a shared pool. Nothing about the airport run is left to whoever happens to be nearby at 4am."
+        body="Riders schedule ahead. Drivers claim from a shared pool. Nothing is left to whoever happens to be nearby at 4am."
       />
 
       <div className="mt-16 grid gap-14 lg:grid-cols-2 lg:gap-20">
@@ -151,7 +150,7 @@ export function Riders() {
         <SectionHeading
           eyebrow="For riders"
           title="Know the time. Know the price. Then stop thinking about it."
-          body="The trip you booked on Sunday is the trip that shows up on Thursday, at the fare you already agreed to."
+          body="The trip you book on Sunday is the trip that shows up on Thursday."
         />
 
         <ul className="mt-16 grid gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
@@ -199,7 +198,7 @@ export function Drivers() {
               tone="invert"
               eyebrow="For drivers"
               title="An open pool, not a dispatcher."
-              body="Every scheduled airport trip is visible with its distance, duration and payout. You pick what fits your day — and the claim is atomic, so a trip you take is a trip that is yours."
+              body="Every airport trip shows its distance, duration and payout. Take the ones that fit your day."
             />
             <BetaLink className="btn mt-9 inline-flex bg-white text-[#101216] hover:bg-white/90">
               Join the beta to drive
@@ -242,7 +241,7 @@ export function Coverage() {
         <SectionHeading
           eyebrow="Coverage"
           title="Two airports, done properly."
-          body="SkyRide covers the Puget Sound's two commercial fields. Narrow on purpose — an airport run is a different problem from a cross-town ride, and we would rather solve it well."
+          body="Narrow on purpose. An airport run is its own problem, and we'd rather solve it well."
         />
 
         <div className="mt-16 grid gap-6 md:grid-cols-2">
@@ -284,31 +283,3 @@ export function Coverage() {
   );
 }
 
-/* -------------------------------------------------------------------------- */
-
-export function Stack() {
-  return (
-    <section className="shell py-20 lg:py-28">
-      <div className="grid gap-12 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-20">
-        <SectionHeading
-          eyebrow="Under the hood"
-          title="Built like infrastructure."
-          body="A native iOS client against a typed API, with fares computed server-side so the number on your phone is the number of record."
-        />
-
-        <ul className="grid grid-cols-2 gap-px self-start overflow-hidden rounded-card border border-line bg-line sm:grid-cols-3">
-          {stack.map((item) => (
-            <li key={item.name} className="bg-card px-5 py-6">
-              <p className="font-medium tracking-[-0.01em] text-ink-strong">
-                {item.name}
-              </p>
-              <p className="mt-1 text-[0.8125rem] text-ink-muted">
-                {item.role}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
