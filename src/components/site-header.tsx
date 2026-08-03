@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BetaLink } from "@/components/beta-link";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { links, navLinks, site } from "@/lib/site";
+import { navLinks, site } from "@/lib/site";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -54,12 +55,9 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <a
-            href={links.waitlist}
-            className="btn btn-primary hidden md:inline-flex"
-          >
-            Get early access
-          </a>
+          <BetaLink className="btn btn-primary hidden md:inline-flex">
+            Join the beta
+          </BetaLink>
 
           <button
             type="button"
@@ -107,13 +105,12 @@ export function SiteHeader() {
               </li>
             ))}
             <li className="pt-3 pb-1">
-              <a
-                href={links.waitlist}
+              <BetaLink
                 onClick={() => setMenuOpen(false)}
                 className="btn btn-primary w-full"
               >
-                Get early access
-              </a>
+                Join the beta
+              </BetaLink>
             </li>
           </ul>
         </nav>

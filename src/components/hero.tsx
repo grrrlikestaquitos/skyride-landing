@@ -1,5 +1,6 @@
+import { BetaLink } from "@/components/beta-link";
 import { PhoneMock } from "@/components/phone";
-import { heroStats, links } from "@/lib/site";
+import { beta, heroStats } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -16,7 +17,7 @@ export function Hero() {
           <div className="rise max-w-xl">
             <p className="inline-flex items-center gap-2 rounded-full border border-line bg-card/70 py-1.5 pr-3.5 pl-2 backdrop-blur">
               <span className="rounded-full bg-brand/12 px-2 py-0.5 font-mono text-[0.625rem] tracking-[0.1em] text-brand-ink uppercase">
-                Now boarding
+                Beta open
               </span>
               <span className="text-[0.8125rem] text-ink-muted">
                 SEA &amp; Paine Field
@@ -35,12 +36,13 @@ export function Hero() {
             <p className="mt-6 text-lg leading-relaxed text-ink-muted">
               SkyRide only does scheduled airport trips. Set the pickup when you
               book the flight, see the fare before you agree to it, and let a
-              verified driver claim the run days in advance.
+              verified driver claim the run days in advance. The iOS beta is
+              open now.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href={links.waitlist} className="btn btn-primary">
-                Get early access
+              <BetaLink className="btn btn-primary">
+                Join the iOS beta
                 <svg
                   viewBox="0 0 20 20"
                   fill="none"
@@ -53,16 +55,14 @@ export function Hero() {
                 >
                   <path d="M4 10h11M11 6l4 4-4 4" />
                 </svg>
-              </a>
+              </BetaLink>
               <a href="#drivers" className="btn btn-ghost">
                 Drive with us
               </a>
             </div>
 
             <p className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[0.6875rem] tracking-[0.06em] text-ink-faint uppercase">
-              <span>Native iOS</span>
-              <span aria-hidden="true">·</span>
-              <span>Sign in with Apple</span>
+              <span>{beta.requirements}</span>
               <span aria-hidden="true">·</span>
               <span>No surge pricing</span>
             </p>

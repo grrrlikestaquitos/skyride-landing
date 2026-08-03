@@ -1,9 +1,9 @@
+import { BetaLink } from "@/components/beta-link";
 import { Icon, type IconName } from "@/components/icons";
 import {
   airports,
   driverFeatures,
   driverSteps,
-  links,
   riderFeatures,
   riderSteps,
   stack,
@@ -201,12 +201,9 @@ export function Drivers() {
               title="An open pool, not a dispatcher."
               body="Every scheduled airport trip is visible with its distance, duration and payout. You pick what fits your day — and the claim is atomic, so a trip you take is a trip that is yours."
             />
-            <a
-              href={links.driverWaitlist}
-              className="btn mt-9 inline-flex bg-white text-[#101216] hover:bg-white/90"
-            >
-              Apply to drive
-            </a>
+            <BetaLink className="btn mt-9 inline-flex bg-white text-[#101216] hover:bg-white/90">
+              Join the beta to drive
+            </BetaLink>
           </div>
 
           <ul className="grid gap-x-10 gap-y-9 sm:grid-cols-2">

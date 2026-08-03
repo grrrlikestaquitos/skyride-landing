@@ -17,9 +17,9 @@ export const site = {
   region: "Puget Sound",
   tagline: "Airport rides you book before you pack.",
   description:
-    "SkyRide is scheduled-in-advance airport ground transport for the Puget Sound. Lock in your pickup time and your fare days ahead, then watch your driver come to the curb.",
+    "SkyRide is scheduled-in-advance airport ground transport for the Puget Sound. Lock in your pickup time and your fare days ahead, then watch your driver come to the curb. Now in public beta on TestFlight.",
   shortDescription:
-    "Scheduled airport rides for SeaTac and Paine Field. Fixed pickup time, fare quoted upfront.",
+    "Scheduled airport rides for SeaTac and Paine Field. Fixed pickup time, fare quoted upfront. Now in public beta on TestFlight.",
 } as const;
 
 export const navLinks = [
@@ -30,11 +30,41 @@ export const navLinks = [
   { href: "#coverage", label: "Coverage" },
 ] as const;
 
-/** Swap for a real App Store URL / waitlist form when they exist. */
 export const links = {
-  waitlist: "#waitlist",
-  driverWaitlist: "#waitlist",
+  /**
+   * The public TestFlight group for the iOS beta. Every "join the beta" CTA on
+   * the page points here — riders and drivers alike, because driver
+   * verification happens inside the same build.
+   */
+  testFlight: "https://testflight.apple.com/join/5Y8t8qQU",
+  /** Apple's TestFlight client, which testers need before the invite resolves. */
+  testFlightApp: "https://apps.apple.com/us/app/testflight/id899247664",
+  /** In-page anchor for the join section. */
+  beta: "#beta",
+  /** Swap for a real App Store URL once the app ships publicly. */
   appStore: null as string | null,
+} as const;
+
+export const beta = {
+  /** Shown under the join buttons — what a tester needs before tapping. */
+  requirements: "iPhone · TestFlight · Puget Sound",
+  steps: [
+    {
+      step: "01",
+      title: "Install TestFlight",
+      body: "Apple ships betas through its own free app. Grab it from the App Store on the iPhone you'll be booking rides from.",
+    },
+    {
+      step: "02",
+      title: "Open the invite",
+      body: "Tap the join link on this page from that iPhone. TestFlight opens on the SkyRide group with an Accept button.",
+    },
+    {
+      step: "03",
+      title: "Book or start driving",
+      body: "Sign in with Apple and schedule an airport run. Driving instead? Clear verification in the app and the open pool unlocks.",
+    },
+  ],
 } as const;
 
 // ---------------------------------------------------------------------------

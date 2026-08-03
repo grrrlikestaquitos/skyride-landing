@@ -1,4 +1,4 @@
-import { CallToAction, SiteFooter } from "@/components/cta";
+import { JoinBeta, SiteFooter } from "@/components/cta";
 import { Hero } from "@/components/hero";
 import { Pricing } from "@/components/pricing";
 import {
@@ -22,7 +22,7 @@ export default function LandingPage() {
         <Pricing />
         <Coverage />
         <Stack />
-        <CallToAction />
+        <JoinBeta />
       </main>
       <SiteFooter />
     </>

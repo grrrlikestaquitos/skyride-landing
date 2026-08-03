@@ -1,35 +1,74 @@
+import { BetaLink } from "@/components/beta-link";
 import { Logo } from "@/components/logo";
-import { links, navLinks, site } from "@/lib/site";
+import { beta, links, navLinks, site } from "@/lib/site";
 
-export function CallToAction() {
+/**
+ * The join section. Distribution is TestFlight, which is an unfamiliar flow for
+ * most people, so the steps are spelled out rather than left behind the button.
+ */
+export function JoinBeta() {
   return (
-    <section id="waitlist" className="shell pb-20 lg:pb-28">
-      <div className="relative overflow-hidden rounded-panel border border-line bg-card px-6 py-16 text-center sm:px-12 lg:py-20">
+    <section id="beta" className="shell pb-20 lg:pb-28">
+      <div className="relative overflow-hidden rounded-panel border border-line bg-card px-6 py-16 sm:px-12 lg:py-20">
         <div
           aria-hidden="true"
           className="hero-glow pointer-events-none absolute inset-x-0 top-0 h-64"
         />
-        <div className="relative mx-auto max-w-2xl">
+        <div className="relative mx-auto max-w-2xl text-center">
           <h2 className="text-3xl leading-[1.1] font-semibold tracking-[-0.03em] sm:text-[2.75rem]">
-            Your next airport run is
-            <br className="hidden sm:block" /> already schedulable.
+            The {site.region} beta
+            <br className="hidden sm:block" /> is open.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-            SkyRide is rolling out across the {site.region}. Join the list and
-            we&apos;ll get you on the iOS beta as we open each area.
+            SkyRide ships to testers through TestFlight, Apple&apos;s beta
+            program. Join the group and the app installs straight to your
+            iPhone — riders and drivers run the same build.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <a href={links.waitlist} className="btn btn-primary">
-              Get early access
-            </a>
-            <a href={links.driverWaitlist} className="btn btn-ghost">
-              Apply to drive
+            <BetaLink className="btn btn-primary">
+              Join the TestFlight beta
+              <svg
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.8}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+                aria-hidden="true"
+              >
+                <path d="M4 10h11M11 6l4 4-4 4" />
+              </svg>
+            </BetaLink>
+            <a
+              href={links.testFlightApp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+            >
+              Get TestFlight first
             </a>
           </div>
           <p className="mt-6 font-mono text-[0.6875rem] tracking-[0.06em] text-ink-faint uppercase">
-            iOS first · Android under evaluation
+            {beta.requirements}
           </p>
         </div>
+
+        <ol className="relative mx-auto mt-14 grid max-w-4xl gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-3">
+          {beta.steps.map((item) => (
+            <li key={item.step} className="bg-card-soft px-6 py-7">
+              <span className="font-mono text-[0.6875rem] text-ink-faint tabular">
+                {item.step}
+              </span>
+              <h3 className="mt-2 font-semibold tracking-[-0.01em] text-ink-strong">
+                {item.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                {item.body}
+              </p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
@@ -44,6 +83,21 @@ export function SiteFooter() {
           <p className="mt-4 text-sm leading-relaxed text-ink-muted">
             {site.shortDescription}
           </p>
+          <BetaLink className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-brand-ink transition-opacity hover:opacity-80">
+            Join the TestFlight beta
+            <svg
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.8}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-3.5 w-3.5"
+              aria-hidden="true"
+            >
+              <path d="M4 10h11M11 6l4 4-4 4" />
+            </svg>
+          </BetaLink>
         </div>
 
         <nav aria-label="Footer">
