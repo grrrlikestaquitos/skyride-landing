@@ -33,6 +33,17 @@ export const navLinks = [
   { href: "#coverage", label: "Coverage" },
 ] as const;
 
+/**
+ * Standalone pages, as opposed to the in-page anchors above. These are real
+ * routes, so they resolve from anywhere — including from the iOS app, which
+ * hard-links to both from its sign-in screen and its Settings screen.
+ * `SkyRide/Constants/LegalLinks.swift` holds the app's copy of these URLs.
+ */
+export const legalLinks = [
+  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms of Service" },
+] as const;
+
 export const links = {
   /**
    * The public TestFlight group for the iOS beta. Every "join the beta" CTA on

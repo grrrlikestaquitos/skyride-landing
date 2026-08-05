@@ -6,7 +6,13 @@ import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { navLinks, site } from "@/lib/site";
 
-export function SiteHeader() {
+/**
+ * @param anchorBase Prefixed onto every `#section` link. Empty on the landing
+ * page, where the targets are in the same document and the browser can smooth
+ * scroll to them. `"/"` on a standalone page like /privacy, where those
+ * targets do not exist and a bare hash would go nowhere.
+ */
+export function SiteHeader({ anchorBase = "" }: { anchorBase?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -34,7 +40,11 @@ export function SiteHeader() {
       }`}
     >
       <div className="shell flex h-16 items-center justify-between gap-6">
-        <a href="#top" className="rounded-lg" aria-label={`${site.name} home`}>
+        <a
+          href={anchorBase || "#top"}
+          className="rounded-lg"
+          aria-label={`${site.name} home`}
+        >
           <Logo />
         </a>
 
@@ -43,7 +53,7 @@ export function SiteHeader() {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={`${anchorBase}${link.href}`}
                   className="text-sm text-ink-muted transition-colors hover:text-ink-strong"
                 >
                   {link.label}
@@ -96,7 +106,7 @@ export function SiteHeader() {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={`${anchorBase}${link.href}`}
                   onClick={() => setMenuOpen(false)}
                   className="block py-2.5 text-[0.9375rem] text-ink-muted transition-colors hover:text-ink-strong"
                 >

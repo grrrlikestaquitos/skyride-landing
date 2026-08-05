@@ -44,9 +44,14 @@ jobs:
 
       # Fail loudly here rather than shipping a site with a broken share card
       # or a custom domain that silently reverts to *.github.io.
+      #
+      # privacy.html and terms.html are load-bearing beyond SEO: the iOS app
+      # hard-links to /privacy and /terms from its sign-in and Settings
+      # screens, and App Review follows both. A build that drops them ships a
+      # dead link inside the app.
       - name: Verify export artifacts
         run: |
-          for f in index.html 404.html robots.txt sitemap.xml opengraph-image.png CNAME .nojekyll; do
+          for f in index.html 404.html privacy.html terms.html robots.txt sitemap.xml opengraph-image.png CNAME .nojekyll; do
             test -e "out/$f" || { echo "::error::missing out/$f"; exit 1; }
           done
           grep -q "www.skyride.app" out/CNAME

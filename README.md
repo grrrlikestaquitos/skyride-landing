@@ -41,6 +41,23 @@ Theme is driven by a `data-theme` attribute on `<html>`, set by a small
 render-blocking script in `src/app/layout.tsx` so the page never flashes the
 wrong palette. `prefers-color-scheme` is the no-JS fallback.
 
+**The legal pages are load-bearing for the app, not just for SEO.** `/privacy`
+and `/terms` are the destinations the iOS app links to from its sign-in screen
+and its Settings screen (`SkyRide/Constants/LegalLinks.swift`), and App Review
+follows both. The deploy workflow asserts `privacy.html` and `terms.html` exist
+in the export for that reason — a build that dropped them would ship a dead link
+inside the app.
+
+Their prose lives in the page files; `src/lib/legal.ts` holds only what a change
+of entity or contact address would touch. Fare figures quoted in the Terms are
+imported from `src/lib/site.ts` rather than typed in, so the Terms cannot cite a
+rate the app does not charge. Sections are declared as one array of
+`{ id, title, body }` and rendered by `LegalDocument`, so the table of contents
+cannot drift out of sync with the document. Because both pages render the shared
+header and footer, those take an `anchorBase` prop — the nav points at sections
+of the landing page, which do not exist here, so on a subpage the hashes are
+prefixed with `/`.
+
 **No scroll-triggered reveal animations.** They were tried and removed: they
 leave everything below the fold at `opacity: 0` until the scroll timeline
 advances, which breaks deep links, find-in-page and printing.

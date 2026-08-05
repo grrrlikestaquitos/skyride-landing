@@ -1,6 +1,7 @@
 import { BetaLink } from "@/components/beta-link";
 import { Logo } from "@/components/logo";
-import { beta, links, navLinks, site } from "@/lib/site";
+import { legal } from "@/lib/legal";
+import { beta, legalLinks, links, navLinks, site } from "@/lib/site";
 
 /**
  * The join section. Distribution is TestFlight, which is an unfamiliar flow for
@@ -73,7 +74,11 @@ export function JoinBeta() {
   );
 }
 
-export function SiteFooter() {
+/**
+ * @param anchorBase See `SiteHeader` — prefixed onto the in-page nav hashes so
+ * the footer still navigates when it is rendered on /privacy or /terms.
+ */
+export function SiteFooter({ anchorBase = "" }: { anchorBase?: string }) {
   return (
     <footer className="border-t border-line bg-bg-soft">
       <div className="shell flex flex-col gap-10 py-14 md:flex-row md:items-start md:justify-between">
@@ -104,7 +109,7 @@ export function SiteFooter() {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={`${anchorBase}${link.href}`}
                   className="text-sm text-ink-muted transition-colors hover:text-ink-strong"
                 >
                   {link.label}
@@ -116,13 +121,32 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-line">
-        <div className="shell flex flex-col gap-3 py-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="shell flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[0.8125rem] text-ink-faint">
-            © {new Date().getFullYear()} {site.name}
+            © {new Date().getFullYear()} {legal.entity}
           </p>
-          <p className="font-mono text-[0.6875rem] tracking-[0.06em] text-ink-faint uppercase">
-            Seattle, WA
-          </p>
+
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            {/* Every page must reach these two in one click — App Review
+                checks it, and the iOS app links to the same URLs. */}
+            <nav aria-label="Legal">
+              <ul className="flex items-center gap-5">
+                {legalLinks.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-[0.8125rem] text-ink-faint transition-colors hover:text-ink-strong"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <p className="font-mono text-[0.6875rem] tracking-[0.06em] text-ink-faint uppercase">
+              Seattle, WA
+            </p>
+          </div>
         </div>
       </div>
     </footer>

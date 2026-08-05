@@ -262,6 +262,90 @@
     background-color: var(--card-soft);
   }
 
+  /* Long-form legal prose --------------------------------------------------
+     The Privacy Policy and Terms are the only continuous body copy on the
+     site, and there is no typography plugin here. Rather than repeat the same
+     six classes on every paragraph of a 20-section document, the rules are
+     scoped to one wrapper. Descendant selectors are the point: the prose
+     inside is written as plain <p>/<ul>/<h3>, which stays readable in the
+     page source and prints correctly.
+  ------------------------------------------------------------------------- */
+
+  .legal {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+
+  /* The gap between numbered sections, not between blocks within one. */
+  .legal > section + section {
+    margin-top: 3.25rem;
+  }
+
+  .legal h2 {
+    font-size: 1.375rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    /* Matches html{scroll-padding-top}; needed here too because the table of
+       contents jumps straight to these headings. */
+    scroll-margin-top: 6rem;
+  }
+
+  .legal h3 {
+    margin-top: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .legal p,
+  .legal ul,
+  .legal ol {
+    margin-top: 1rem;
+    color: var(--ink-muted);
+  }
+
+  .legal h2 + p,
+  .legal h2 + ul,
+  .legal h3 + p,
+  .legal h3 + ul {
+    margin-top: 0.875rem;
+  }
+
+  .legal ul {
+    list-style: disc;
+    padding-inline-start: 1.25rem;
+  }
+
+  .legal ol {
+    list-style: decimal;
+    padding-inline-start: 1.25rem;
+  }
+
+  .legal li + li {
+    margin-top: 0.5rem;
+  }
+
+  .legal li::marker {
+    color: var(--ink-faint);
+  }
+
+  .legal strong {
+    color: var(--ink-strong);
+    font-weight: 600;
+  }
+
+  .legal a {
+    color: var(--brand-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    transition: opacity 180ms ease;
+  }
+
+  .legal a:hover {
+    opacity: 0.75;
+  }
+
   /* Decorative backdrops --------------------------------------------------- */
 
   .grid-backdrop {
