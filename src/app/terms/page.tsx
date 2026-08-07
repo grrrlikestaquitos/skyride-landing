@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { LegalDocument, Mail, type LegalSection } from "@/components/legal";
-import { legal, takeRatePercent } from "@/lib/legal";
-import { pricing, site, usd } from "@/lib/site";
+import { legal } from "@/lib/legal";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -10,17 +10,25 @@ export const metadata: Metadata = {
 };
 
 /*
-  As with the Privacy Policy, every operational claim here is traceable to
-  code, and the fare figures are imported from `site.ts` rather than typed in,
-  so the Terms cannot quote a rate the app does not charge:
+  As with the Privacy Policy, every operational claim here is traceable to code:
 
-  - fare formula        → SkyRideServer src/util/trip-pricing.ts
+  - fare formula        → SkyRideServer src/util/trip-pricing.ts,
+                          src/controllers/pricing-controller.ts
+  - rate cards          → SkyRideServer database/seeds/40_fare_rate_cards.js
+  - platform take       → SkyRideServer database/seeds/50_platform_take_rules.js
   - tax                 → SkyRideServer src/controllers/payout-controller.ts
   - driver pay + floor  → SkyRideServer src/util/revenue-split.ts,
                           src/util/driver-pay-standard.ts
   - cancellation rules  → SkyRideServer src/controllers/ride-controller.ts,
                           src/controllers/driver-controller.ts
+  - beta is free        → SkyRide/Reusable/TripPricing/BetaPricing.swift
   - no payment movement → no payment provider is wired up in either codebase
+
+  No rate — fare or take — is quoted in this document. Both are effective-dated
+  rows resolved per jurisdiction, so a figure written here is true for one market
+  and silently wrong for the next. It has already happened once: this file cited
+  a 20% platform fee, copied from a server fallback constant, while the rule in
+  force was 10%. Describe the mechanism; let the app state the amount.
 */
 
 const sections: readonly LegalSection[] = [
@@ -159,36 +167,44 @@ const sections: readonly LegalSection[] = [
     body: (
       <>
         <p>
-          Fares are calculated by the server, not estimated on your phone. The
-          formula is:
+          Fares are calculated by the server, not estimated on your phone. A
+          fare is metered on the distance and the duration of your route, with a
+          minimum fare for short trips, and a factor for route conditions that
+          applies to the time component only and is capped.
         </p>
-        <ul>
-          <li>
-            a distance charge of {usd(pricing.ratePerMile)} per mile, plus
-          </li>
-          <li>
-            a time charge of {usd(pricing.ratePerMinute)} per minute, multiplied
-            by a traffic factor that is <strong>capped</strong> between{" "}
-            {pricing.minTrafficMultiplier.toFixed(1)}× and{" "}
-            {pricing.maxTrafficMultiplier.toFixed(1)}×,
-          </li>
-          <li>
-            with a minimum fare of {usd(pricing.minimumFare)} for any trip.
-          </li>
-        </ul>
         <p>
-          There is no surge pricing. The capped traffic factor is the only thing
-          that varies with conditions, and it can never more than double a
-          trip’s time charge. Rates are set per region and may change, but{" "}
+          <strong>Rates are set per region</strong>, from the pickup location,
+          and may change over time. The rates that apply to your trip are the
+          ones in force when you book it, and they are reflected in the price
+          the app shows you before you confirm. We publish current rates in the
+          app rather than here, so that what you are quoted and what this
+          document describes cannot disagree.
+        </p>
+        <p>
+          There is no surge pricing. Nothing in the fare responds to demand — not
+          the time of day, not the weather, not how many people are booking. The
+          capped conditions factor is the only thing that varies at all, and{" "}
           <strong>
             the fare you are shown before confirming is the fare for that trip
           </strong>{" "}
           — it does not move afterwards unless you edit the booking.
         </p>
         <p>
-          A fare may be raised above the formula where necessary to meet a legal
-          minimum payment to the driver — see{" "}
+          A fare may be raised above the metered amount where necessary to meet
+          a legal minimum payment to the driver — see{" "}
           <a href="#driver-pay">Driver earnings</a>.
+        </p>
+        <h3>During the beta</h3>
+        <p>
+          <strong>
+            While {site.name} is in beta, trips are free to riders and no fare is
+            payable.
+          </strong>{" "}
+          The app still prices every trip and shows you what it would cost, so
+          you can see what you are getting and tell us whether the price is
+          right, but that amount is not owed and will not be collected. We will
+          tell riders before this ends, and no trip booked while it is in force
+          becomes chargeable afterwards.
         </p>
         <h3>Tax</h3>
         <p>
@@ -212,10 +228,9 @@ const sections: readonly LegalSection[] = [
             {site.name} does not currently process payments. The app does not
             collect card details and no charge is made through it.
           </strong>{" "}
-          The fare shown is what the trip is priced at; settling it is arranged
-          directly between the rider and the driver, and Sky Ride is not a party
-          to that settlement and does not hold, transmit or guarantee any money
-          between you.
+          Trips are free to riders during the beta, so there is nothing to
+          settle — see <a href="#fares">Fares and taxes</a>. Sky Ride does not
+          hold, transmit or guarantee any money between a rider and a driver.
         </p>
         <p>
           We intend to add in-app payment through a third-party payment
@@ -377,20 +392,26 @@ const sections: readonly LegalSection[] = [
     body: (
       <>
         <p>
-          For each completed trip, a driver earns the fare less a platform fee,
-          currently <strong>{takeRatePercent}</strong> of the fare. The fee can
-          vary by market and may change over time; the one that applies is the
-          one in force when the trip completes, and every trip’s fee is itemised
-          in the driver’s earnings. Tax collected from the rider is never part
-          of that split — it is held for remittance.
+          For each completed trip, a driver earns the fare less a platform fee.
+          The fee varies by market and may change over time; the one that
+          applies is the one in force when the trip completes.{" "}
+          <strong>
+            Every trip states its fee and the resulting payout in the app —
+            before a driver claims it, and again once it completes
+          </strong>{" "}
+          — so a driver never has to take an advertised rate on trust. Tax
+          collected from the rider is never part of that split; it is held for
+          remittance.
         </p>
         <p>
           Where the law sets a minimum payment per trip — as Washington does,
           per passenger minute and mile with a floor per trip — the driver
-          receives at least that minimum. If the fare formula would not clear
-          it, the rider’s fare is raised at booking so that it does, and if the
-          trip runs longer than estimated, we absorb the difference rather than
-          reduce the driver’s pay.
+          receives at least that minimum. If the ordinary split would not clear
+          it, the rider’s fare is raised at booking so that it does, and the
+          shortfall comes out of our fee before it comes out of the driver’s
+          pay. If the trip runs longer than estimated, we absorb the difference
+          rather than reduce what the driver is owed — including where that
+          leaves us taking nothing from the trip at all.
         </p>
         <p>
           Earnings appear in the app as they accrue and are batched for payout.{" "}
@@ -719,14 +740,36 @@ const sections: readonly LegalSection[] = [
     id: "changes",
     title: "Changes to these Terms",
     body: (
-      <p>
-        We may update these Terms as the product changes, and will change the
-        effective date at the top when we do. If a change is material — a new
-        fee, a change to how fares or payouts work, a change to how{" "}
-        <a href="#disputes">disputes are resolved</a> — we will give you notice
-        in the app or by email before it takes effect. Continuing to use{" "}
-        {site.name} after that means you accept the updated Terms.
-      </p>
+      <>
+        <p>
+          We may update these Terms as the product changes, and will change the
+          effective date at the top when we do. If a change is material — a new
+          fee, a change to how fares or payouts work, a change to how{" "}
+          <a href="#disputes">disputes are resolved</a> — we will give you
+          notice in the app or by email before it takes effect. Continuing to
+          use {site.name} after that means you accept the updated Terms.
+        </p>
+        <h3>What changed on {legal.effective}</h3>
+        <ul>
+          <li>
+            <a href="#fares">Fares and taxes</a> no longer quotes fixed per-mile
+            and per-minute rates. Rates are set per region and published in the
+            app; how a fare is worked out has not changed.
+          </li>
+          <li>
+            <a href="#fares">Fares and taxes</a> and{" "}
+            <a href="#payment">Payment</a> now state that trips are free to
+            riders during the beta.
+          </li>
+          <li>
+            <a href="#driver-pay">Driver earnings</a> previously named a 20%
+            platform fee. That figure was wrong — it was higher than the fee
+            actually charged. The section now describes how the fee is set and
+            where a driver can see it, and confirms that a shortfall against a
+            legal minimum comes out of our fee first.
+          </li>
+        </ul>
+      </>
     ),
   },
   {
@@ -759,12 +802,12 @@ export default function TermsPage() {
             transportation carrier and we do not employ drivers.
           </li>
           <li>
-            The fare you are quoted is the fare you pay. No surge, and the
-            traffic factor is capped at{" "}
-            {pricing.maxTrafficMultiplier.toFixed(1)}×.
+            The fare you are quoted is the fare you pay. No surge, and rates are
+            published in the app before you book.
           </li>
           <li>
-            The app does not take payment yet, and no payouts are disbursed yet.
+            Trips are free to riders during the beta. The app does not take
+            payment, and no payouts are disbursed yet.
           </li>
           <li>
             Riders can cancel free of charge until the driver starts the trip.

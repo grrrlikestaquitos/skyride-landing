@@ -7,10 +7,15 @@
  * to, and the date the documents took effect. Keeping them in one const means
  * changing the contact address is one edit, not a search across two long pages.
  *
- * Product facts the documents cite — the fare rates, the minimum fare, the
- * traffic ceiling, the airports — are NOT duplicated here. They come from
- * `site.ts`, which already mirrors `TripPricing.swift`, so the Terms cannot
- * quote a fare the app does not charge.
+ * Product facts the documents cite are NOT duplicated here — and the fare rates
+ * and the platform's take are no longer cited at all. Both are effective-dated,
+ * per-jurisdiction rows on the server (`fare-rate-cards`, `platform-take-rules`),
+ * so any figure written into a legal document is true for one market until
+ * someone opens another one. This file used to carry a 20% take rate mirrored
+ * from a server *fallback* constant while the rule actually in force was 10%,
+ * which is the failure mode: a number copied here goes stale silently, and the
+ * Terms overstated what SkyRide keeps from a driver's fare. The documents now
+ * describe how rates are set and point at the app for what they are.
  */
 
 export const legal = {
@@ -25,12 +30,5 @@ export const legal = {
    * this date whenever either one changes materially, and say what changed in
    * the "Changes" section.
    */
-  effective: "August 5, 2026",
-  /**
-   * The platform's cut of the fare, in basis points, mirroring the server's
-   * `DEFAULT_TAKE_RATE_BASIS_POINTS` in `src/util/revenue-split.ts`.
-   */
-  takeRateBasisPoints: 2000,
+  effective: "August 6, 2026",
 } as const;
-
-export const takeRatePercent = `${legal.takeRateBasisPoints / 100}%`;

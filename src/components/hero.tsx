@@ -75,7 +75,7 @@ export function Hero() {
         </div>
 
         {/* Stat strip */}
-        <dl className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-panel border border-line bg-line lg:grid-cols-4">
+        <dl className="mt-20 grid grid-cols-1 gap-px overflow-hidden rounded-panel border border-line bg-line sm:grid-cols-3">
           {heroStats.map((stat) => (
             <div key={stat.label} className="bg-card px-6 py-7">
               <dt className="font-mono text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">

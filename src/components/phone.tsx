@@ -1,11 +1,13 @@
-import { fareExample, quoteFare, site, usd } from "@/lib/site";
-
-const fare = quoteFare(fareExample);
+import { site } from "@/lib/site";
 
 /**
  * A rendition of the app's scheduled-trip screen. Everything is drawn with the
  * shared design tokens, so the mock re-themes with the rest of the page and
  * never goes stale the way a screenshot would.
+ *
+ * The fare row shows the lock rather than an amount. A figure here would be a
+ * figure for one city on one route, and the last one was wrong by a third — see
+ * `pricingPoints` in `src/lib/site.ts`.
  */
 export function PhoneMock() {
   return (
@@ -117,7 +119,7 @@ export function PhoneMock() {
               <div className="flex-1 space-y-3">
                 <div>
                   <p className="text-[0.8125rem] font-medium text-ink-strong">
-                    {fareExample.from}
+                    Capitol Hill
                   </p>
                   <p className="text-[0.6875rem] text-ink-muted">
                     1521 12th Ave, Seattle
@@ -136,18 +138,18 @@ export function PhoneMock() {
 
             <div className="my-4 h-px bg-line" />
 
-            <div className="flex items-end justify-between">
+            <div className="flex items-end justify-between gap-3">
               <div>
                 <p className="font-mono text-[0.625rem] tracking-[0.12em] text-ink-faint uppercase">
-                  Fare, locked
+                  Fare
                 </p>
-                <p className="tabular mt-0.5 text-2xl font-semibold tracking-[-0.02em] text-ink-strong">
-                  {usd(fare.total)}
+                <p className="mt-0.5 text-lg font-semibold tracking-[-0.02em] text-ink-strong">
+                  Quoted &amp; locked
                 </p>
               </div>
-              <p className="tabular text-[0.6875rem] text-ink-muted">
-                {fareExample.miles} mi · {fareExample.minutes} min
-              </p>
+              <span className="shrink-0 rounded-full border border-success/30 bg-success/12 px-2.5 py-1 font-mono text-[0.5625rem] tracking-wide text-success">
+                NO SURGE
+              </span>
             </div>
 
             {/* Driver */}

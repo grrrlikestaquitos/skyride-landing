@@ -11,7 +11,7 @@ import {
 
 /* -------------------------------------------------------------------------- */
 
-function SectionHeading({
+export function SectionHeading({
   eyebrow,
   title,
   body,
@@ -198,7 +198,7 @@ export function Drivers() {
               tone="invert"
               eyebrow="For drivers"
               title="An open pool, not a dispatcher."
-              body="Every airport trip shows its distance, duration and payout. Take the ones that fit your day."
+              body="Every airport trip shows its distance, duration, payout and what it pays per hour. Take the ones that fit your day."
             />
             <BetaLink className="btn mt-9 inline-flex bg-white text-[#101216] hover:bg-white/90">
               Join the beta to drive

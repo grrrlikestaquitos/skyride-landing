@@ -82,47 +82,62 @@ export const beta = {
 } as const;
 
 // ---------------------------------------------------------------------------
-// Pricing — mirrors TripPricing.swift
+// Pricing
 // ---------------------------------------------------------------------------
 
-export const pricing = {
-  ratePerMile: 1.77,
-  ratePerMinute: 0.35,
-  minTrafficMultiplier: 1.0,
-  maxTrafficMultiplier: 1.2,
-  minimumFare: 8.0,
-} as const;
+/**
+ * How pricing works, without any rates.
+ *
+ * This page used to publish the fare formula — a rate per mile, a rate per
+ * minute, the traffic band and the minimum fare — mirrored from a constant in
+ * the iOS app. That mirror no longer exists and can't be rebuilt: rates are
+ * effective-dated rows in `fare-rate-cards`, resolved per jurisdiction from the
+ * pickup, and Seattle's card is not Washington's card is not the national one.
+ * Any figure typed here is a snapshot of one region that goes stale silently,
+ * and it was already wrong — the published rate was the national baseline, which
+ * is the one card no Puget Sound rider is ever priced against.
+ *
+ * So: describe the mechanism, quote no numbers. The rider's actual price comes
+ * from the server before they confirm, which is the promise worth making anyway.
+ */
+export const pricingPoints = [
+  {
+    title: "Priced on your actual route",
+    body: "Distance and time for the roads you'll really drive, not a straight line across the map.",
+  },
+  {
+    title: "Quoted before you book",
+    body: "The full price is on screen before you confirm, and it doesn't move afterwards.",
+  },
+  {
+    title: "No surge",
+    body: "Nothing about your fare changes because it's raining, or because it's 4am.",
+  },
+  {
+    title: "Tax shown separately",
+    body: "Where your pickup is taxed, it's a line of its own. We collect it to remit it — it was never ours.",
+  },
+  {
+    title: "Rates are set per city",
+    body: "Each market has its own rate card, and yours is the one applied when you book.",
+  },
+] as const;
 
-/** A worked example so the fare math is legible, not just asserted. */
-export const fareExample = {
-  from: "Capitol Hill",
-  to: "SEA",
-  miles: 15,
-  minutes: 30,
-  traffic: 1.1,
-} as const;
-
-export function quoteFare({
-  miles,
-  minutes,
-  traffic,
-}: {
-  miles: number;
-  minutes: number;
-  traffic: number;
-}) {
-  const clamped = Math.min(
-    Math.max(traffic, pricing.minTrafficMultiplier),
-    pricing.maxTrafficMultiplier,
-  );
-  const distanceCost = miles * pricing.ratePerMile;
-  const timeCost = minutes * pricing.ratePerMinute * clamped;
-  const total = Math.max(distanceCost + timeCost, pricing.minimumFare);
-  return { distanceCost, timeCost, total, traffic: clamped };
-}
-
-export const usd = (value: number) =>
-  value.toLocaleString("en-US", { style: "currency", currency: "USD" });
+/**
+ * Charges a rider might reasonably expect and won't find. Each one is a real
+ * absence in the server, not a promotion — there is no booking-fee, airport-fee
+ * or gratuity field anywhere in the pricing path.
+ *
+ * Cancellation is deliberately absent from this list. The Terms say there is no
+ * cancellation fee today, but the app still shows riders a "$5" disclaimer for
+ * an unbuilt fee; claiming $0 here would contradict a live screen.
+ */
+export const noCharges = [
+  "Surge multiplier",
+  "Booking fee",
+  "Airport surcharge",
+  "Expected tip",
+] as const;
 
 // ---------------------------------------------------------------------------
 // Coverage — mirrors AppLocations.swift
@@ -149,9 +164,8 @@ export const airports = [
 
 export const heroStats = [
   { value: "2", label: "Airports served" },
-  { value: usd(pricing.minimumFare), label: "Minimum fare" },
-  { value: "1.0–1.2×", label: "Traffic ceiling" },
-  { value: "0", label: "Surge surprises" },
+  { value: "0", label: "Surge pricing" },
+  { value: "$0", label: "Booking fees" },
 ] as const;
 
 export const riderSteps = [
@@ -181,7 +195,7 @@ export const driverSteps = [
   {
     step: "02",
     title: "Browse the pool",
-    body: "Every open airport trip, with distance, duration and payout shown upfront.",
+    body: "Every open airport trip, with distance, duration, payout and hourly rate shown upfront.",
   },
   {
     step: "03",
@@ -223,6 +237,14 @@ export const riderFeatures = [
   },
 ] as const;
 
+/**
+ * Six, because the grid is `sm:grid-cols-2` and five would leave a gap.
+ *
+ * No commission percentage here on purpose. The driver app shows the *effective*
+ * share on each trip, measured from the fee and the fare it actually landed on,
+ * rather than an advertised rate — a rate quoted here is one a driver can
+ * disprove with one division the moment a pay standard changes the split.
+ */
 export const driverFeatures = [
   {
     title: "Open ride pool",
@@ -236,8 +258,18 @@ export const driverFeatures = [
   },
   {
     title: "Payout before you accept",
-    body: "Distance, duration and fare on the card, before you commit.",
+    body: "Distance, duration and what you'd clear after fees — on the card, before you commit.",
     icon: "wallet",
+  },
+  {
+    title: "The rate, not just the fare",
+    body: "Every open trip shows what it pays per hour with a passenger, and you can sort the pool by it. The biggest fare is often the worse job.",
+    icon: "tag",
+  },
+  {
+    title: "Minimum pay, covered",
+    body: "Where a city sets a minimum driver rate, we make up the difference out of our own fee rather than yours.",
+    icon: "star",
   },
   {
     title: "Plan a week ahead",
