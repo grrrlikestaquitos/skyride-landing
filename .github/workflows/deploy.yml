@@ -49,9 +49,16 @@ jobs:
       # hard-links to /privacy and /terms from its sign-in and Settings
       # screens, and App Review follows both. A build that drops them ships a
       # dead link inside the app.
+      #
+      # payments.html is the same kind of promise and a harder one to take
+      # back. It fills `managementURL` on the Apple Pay merchant token the app
+      # requests, and that URL is stored WITH THE TOKEN in the rider's Wallet
+      # when the card is saved. Dropping this page does not just break a link
+      # somebody can retry later — it breaks it permanently for every rider who
+      # saved a card while it was live.
       - name: Verify export artifacts
         run: |
-          for f in index.html 404.html privacy.html terms.html robots.txt sitemap.xml opengraph-image.png CNAME .nojekyll; do
+          for f in index.html 404.html privacy.html terms.html payments.html robots.txt sitemap.xml opengraph-image.png CNAME .nojekyll; do
             test -e "out/$f" || { echo "::error::missing out/$f"; exit 1; }
           done
           grep -q "www.skyride.app" out/CNAME
